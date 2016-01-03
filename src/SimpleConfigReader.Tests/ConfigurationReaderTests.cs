@@ -5,56 +5,11 @@ using SimpleConfigReader.Tests.Fixture;
 
 namespace SimpleConfigReader.Tests
 {
-    public static class AppSettingsReader
-    {
-        public static int? ReadInt(string name)
-        {
-            var value = ConfigurationManager.AppSettings[name];
-            int result;
-            return (value != null && int.TryParse(value, out result))
-                ? result
-                : (int?)null;
-        }
-
-        public static string ReadString(string name)
-        {
-            return ConfigurationManager.AppSettings[name];
-        }
-
-        public static bool? ReadBool(string name)
-        {
-            var value = ConfigurationManager.AppSettings[name];
-
-            switch (value)
-            {
-                case "1":
-                    return true;
-
-                case "0":
-                    return false;
-
-                default:
-                    bool result;
-                    return (value != null && bool.TryParse(value, out result))
-                        ? result
-                        : (bool?) null;
-            }
-        }
-    }
-
     [TestFixture]
     internal class ConfigurationReaderTests
     {
-        private void Test()
-        {
-            bool useSomeFunction = AppSettingsReader.ReadBool("UseSomeFunction") ?? false;
-            string serverAddress = AppSettingsReader.ReadString("ServerAddress");
-
-            int timeoutInSeconds = AppSettingsReader.ReadInt("TimeoutInSeconds") ?? 1000;
-        }
-
         [Test]
-        public void ReadStringValueFromConfig()
+        public void ReadStringValue()
         {
             var settings = ConfigurationReader<SettingsWithString>.ReadFromCollection(
                 new KeyValueConfigurationCollection { { "StringValue", "stringValue" } });
@@ -63,7 +18,7 @@ namespace SimpleConfigReader.Tests
         }
 
         [Test]
-        public void ReadStringArrayFromConfig()
+        public void ReadStringArrayValues()
         {
             var settings = ConfigurationReader<SettingsWithStringArray>.ReadFromCollection(
                 new KeyValueConfigurationCollection { { "StringArrayValues", "ss34dd;30;40;dfdfa" } });
@@ -102,7 +57,7 @@ namespace SimpleConfigReader.Tests
         }
 
         [Test]
-        public void ReadDefaultIntValue()
+        public void ReadZeroAsDefaultIntValue()
         {
             var settings = ConfigurationReader<SettingsWithInt>.ReadFromCollection(new KeyValueConfigurationCollection());
 
@@ -134,7 +89,6 @@ namespace SimpleConfigReader.Tests
             Assert.AreEqual(false, boolArray[3]);
             Assert.AreEqual(false, boolArray[4]);
             Assert.AreEqual(false, boolArray[5]);
-
         }
 
         [Test]
@@ -165,7 +119,7 @@ namespace SimpleConfigReader.Tests
         }
 
         [Test]
-        public void ReadDefaultBoolValue()
+        public void ReadFalseAsDefaultBoolValue()
         {
             var settings = ConfigurationReader<SettingsWithBool>.ReadFromCollection(new KeyValueConfigurationCollection());
 
@@ -189,7 +143,6 @@ namespace SimpleConfigReader.Tests
             Assert.AreEqual(10.3, settings.DoubleValue, 0.001);
         }
 
-
         [Test]
         public void ReadDoubleArrayValues()
         {
@@ -209,9 +162,8 @@ namespace SimpleConfigReader.Tests
             Assert.AreEqual(default(double), doubleArray[6]);
         }
 
-
         [Test]
-        public void ReadDefaultDoubleValue()
+        public void ReadZeroAsDefaultDoubleValue()
         {
             var settings = ConfigurationReader<SettingsWithDouble>.ReadFromCollection(new KeyValueConfigurationCollection());
 

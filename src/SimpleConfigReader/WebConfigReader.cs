@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Reflection;
+using System.Web.Configuration;
 using Configuration = System.Configuration.Configuration;
 
 namespace SimpleConfigReader
 {
     /// <summary>
-    /// Читатель параметров из app.config.
+    /// Читатель параметров из Web.config.
     /// </summary>
-    public static class AppConfigReader
+    public static class WebConfigReader
     {
         /// <summary>
         /// Чтение настроек из заданной секции app.config в класс настроек.
@@ -42,7 +42,7 @@ namespace SimpleConfigReader
 
         private static Configuration GetConfiguration()
         {
-            return ConfigurationManager.OpenExeConfiguration(Assembly.GetExecutingAssembly().Location);
+            return WebConfigurationManager.OpenWebConfiguration("~/Web.config");
         }
 
         private static AppSettingsSection GetSection(Configuration configuration, string sectionName)
