@@ -72,6 +72,16 @@ For example, for *int* type we'll get 0, and for *bool* - false.
 
 ## Reading array values
 You can read array values separated by semicolon.
+
+*app.config* file:
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <appSettings>
+    <add key="Numbers" value="1;234;-23;45" />
+  </appSettings>
+</configuration>
+```
 ```c#
     public class UserSettings
     {
