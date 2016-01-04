@@ -117,7 +117,7 @@ For read this settings into object use another method:
 ```
 
 ## Reading values from key-value collection.
-If you have any settings, presented in key-value collection, you can read them into settings object. It's comfortable for reading settings from custom data sources.
+If you have settings as key-value collection, you can also read them into settings object. The main purpose of it is reading settings from custom data sources.
 ```c#
     var collection = new KeyValueConfigurationCollection()
     {
