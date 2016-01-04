@@ -67,8 +67,8 @@ You can define default values in constructor using nullable types.
     }
 ```
 
-If default value is not defined in constructor of settings class and there's no value for this parameter in configuration file, then we get default value for this type.
-For example, for *int* type we'll get 0, and for *bool* - false.
+If there's no value in configuration file, or the value of parameter is not valid, then we get default value for parameter type.
+For example, for *int* type we'll get 0, for *bool* - false, for *double?* - null.
 
 ## Reading array values
 You can read array values separated by semicolon.
