@@ -137,3 +137,25 @@ The parameters of constructor in settings class could be:
  - bool
  
 and *IEnumerable<>* of this types.
+
+## Using with Autofac
+You can simply use readers with IoC containers.
+Here's example with Autofac:
+```c#
+    public static class AutofacExtension
+    {
+        public static void RegisterReaderFromAppSettings<T>(this ContainerBuilder builder) where T : class
+        {
+            builder.Register(c => AppConfigReader.ReadFromAppSettings<T>())
+                .AsSelf()
+                .SingleInstance();
+        }
+    }
+```
+   
+```c#   
+    builder = new ContainerBuilder();
+    ...
+    builder.RegisterReaderFromAppSettings<UserSettings>();
+    var container = builder.Build();
+```
