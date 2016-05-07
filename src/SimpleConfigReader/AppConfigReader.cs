@@ -24,7 +24,7 @@ namespace SimpleConfigReader
                 throw new ArgumentNullException(nameof(sectionName));
             }
 
-            var configuration = GetConfiguration();
+            var configuration = GetConfiguration(Assembly.GetCallingAssembly());
             var section = GetSection(configuration, sectionName);
             return ConfigurationReader<T>.ReadFromCollection(section.Settings);
         }
@@ -36,13 +36,14 @@ namespace SimpleConfigReader
         /// <returns>Прочитанные настройки.</returns>
         public static T ReadFromAppSettings<T>()
         {
-            var configuration = GetConfiguration();
+            var configuration = GetConfiguration(Assembly.GetCallingAssembly());
             return ConfigurationReader<T>.ReadFromCollection(configuration.AppSettings.Settings);
         }
 
-        private static Configuration GetConfiguration()
+        private static Configuration GetConfiguration(Assembly configurationAssembly)
         {
-            return ConfigurationManager.OpenExeConfiguration(Assembly.GetExecutingAssembly().Location);
+            // для получения сборки, в которой непосредственно используется библиотека, пробрасываем assembly
+            return ConfigurationManager.OpenExeConfiguration(configurationAssembly.Location);
         }
 
         private static AppSettingsSection GetSection(Configuration configuration, string sectionName)
